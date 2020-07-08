@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+
+    <table border='1' cellspacing='0'>
+        <tr>
+            <td>id</td>
+            <td>userName</td>
+            <td>passWord</td>
+            <td>realName</td>
+            <td>编辑</td>
+            <td>删除</td>
+        </tr>
+        <tr th:each="user:${page.list}">
+            <td th:text="${user.id}"></td>
+            <td th:text="${user.userName}"></td>
+            <td th:text="${user.passWord}"></td>
+            <td th:text="${user.realName}"></td>
+            <td><a th:href="@{/crudPage/editUser(id=${user.id})}">编辑</a></td>
+            <td><a th:href="@{/crudPage/deleteUser(id=${user.id})}">删除</a></td>
+        </tr>
+    </table>
+    <br/>
+    <div>
+        <a th:href="@{/crudPage/listUser(start=0)}">[首  页]</a>
+        <a th:href="@{/crudPage/listUser(start=${page.pageNum-1})}">[上一页]</a>
+        <span th:text="|第 ${page.pageNum} 页|"></span>
+        <a th:href="@{/crudPage/listUser(start=${page.pageNum+1})}">[下一页]</a>
+        <span th:text="|共 ${page.pages} 页|"></span>
+        <a th:href="@{/crudPage/listUser(start=${page.pages})}">[末  页]</a>
+    </div>
+
+
+
+    <br/>
+    <form action="/crudPage/addUser" method="post">
+        用户名：<input type="text" name="userName"><br>
+        密 码 ：<input type="password" name="passWord"><br>
+        身 份 ：<input type="text" name="realName"><br>
+        <input type="submit" value="新增" >
+    </form>
+
+
+</body>
+</html>

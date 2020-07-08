@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js">
+    </script>
+
+
+
+</head>
+<body>
+
+<h1>hello world!</h1>
+
+
+<form action="/addUser" method="post">
+    用户名：<input type="text" name="userName"><br>
+    密 码 ：<input type="password" name="passWord"><br>
+    身 份 ：<input type="text" name="realName"><br>
+    <input type="submit" value="新增" >
+</form>
+<br>
+
+<button id="btn">查询全部</button>
+<br>
+
+<table id="table" border="1px">
+    <tr>
+        <td>id</td>
+        <td>用户名</td>
+        <td>密码</td>
+        <td>级别</td>
+        <td>操作</td>
+    </tr>
+</table>
+
+
+
+
+<div id="div1">
+    <form action="/Query" method="post">
+        用户名：<input type="text" name="userName"><br>
+        身 份 ：<input type="text" name="realName"><br>
+        <input type="submit" value="查询" >
+    </form>
+</div>
+
+
+<script type="text/javascript">
+    $(function () {
+        $("#btn").click(function () {
+            $.ajax({
+                type: 'post',
+                url: '/QueryAjax',
+                //contentType: "application/json",
+                async: false,
+                //data: JSON.stringify({"recruitId": recruitId}),
+                dataataType: 'json',
+                success: function (data) {
+                    for (var i = 0; i < data.length; i++) {
+                        $("#table").append("<tr> <td>"+data[i].id+"</td> <td>"+data[i].userName+"</td> <td>"+data[i].passWord+"</td>   <td>"+data[i].realName+"</td> " +
+                            "<td>\n" +
+                            "            <a href=\"UpdateAjax1?id="+data[i].id+"\">编辑</a>\n" +
+                            "            <button class=\"btnD\" name='"+data[i].id+"'>删除</button>\n" +
+                            "        </td> </tr>");
+                    }
+                    $("body").on('click','.btnD',function(){
+                        $("#table tr:not(:first)").remove();
+                        var id = $(this).attr("name");
+                        var self = $(this);
+                        alert(id);
+                        $.ajax({
+                            type: 'POST',
+                            url: '/DelAjax',
+                            contentType: "application/json",
+                            async: false,
+                            data: JSON.stringify({"id": id}),
+                            dataataType: 'json',
+                            success: function (data) {
+                                $(self).parent().parent().remove();
+                            }
+                        });
+                    });
+                    // $("body").on('click','.btnU',function(){
+                    //     var id = $(this).attr("name");
+                    //     var self = $(this);
+                    //     alert(id);
+                    //     $.ajax({
+                    //         type: 'POST',
+                    //         url: '/UpdateAjax',
+                    //         contentType: "application/json",
+                    //         async: false,
+                    //         data: JSON.stringify({"id": id}),
+                    //         dataataType: 'json',
+                    //         success: function (data) {
+                    //         }
+                    //     });
+                    // });
+                }
+            });
+        });
+
+
+
+    });
+
+</script>
+
+
+</body>
+</html>

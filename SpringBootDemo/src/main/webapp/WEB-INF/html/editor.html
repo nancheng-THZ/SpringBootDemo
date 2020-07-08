@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<br/>
+<form action="/crudPage/updateUser" method="post">
+    <input name="id" type="hidden" th:value="${user.id}"/>
+    用户名：<input type="text" name="userName" th:value="${user.userName}"><br>
+    密 码 ：<input type="password" name="passWord" th:value="${user.passWord}"><br>
+    身 份 ：<input type="text" name="realName" th:value="${user.realName}"><br>
+    <input type="submit" value="修改" >
+</form>
+
+
+</body>
+</html>
